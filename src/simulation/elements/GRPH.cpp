@@ -24,11 +24,10 @@ void Element::Element_GRPH()
     Flammable = 0;
     Explosive = 0;
     Meltable = 1;
-    Hardness = 50;
+    Hardness = 85; 
+    Weight = 100; 
 
-    Weight = 100;
-
-    HeatConduct = 251; // High thermal conductivity
+    HeatConduct = 251; 
     Description = "Graphene. Extremely conductive, strong, and light.";
 
     Properties = TYPE_SOLID | PROP_CONDUCTS | PROP_HOT_GLOW | PROP_LIFE_DEC;
@@ -64,34 +63,30 @@ static int update(UPDATE_FUNC_ARGS)
                 float rtemp = parts[ID(r)].temp;
                 float temp_diff = temp - rtemp;
 
-                // Thermal conductivity
-                if (abs(temp_diff) > 5.0f)
+                // Thermal conductivity logic
+                if (abs(temp_diff) > 1.0f)
                 {
-                    parts[i].temp -= temp_diff * 0.5f;
-                    parts[ID(r)].temp += temp_diff * 0.5f;
+                    parts[i].temp -= temp_diff * 0.75f;
+                    parts[ID(r)].temp += temp_diff * 0.75f;
                 }
             }
         }
     }
 
     // Electrical conductivity logic
-    // Example: Decrease conductivity at high temperature
-    if (temp > 2000.0f)
+    if (temp > 3000.0f)
     {
-        // Reduced conductivity
         parts[i].ctype = PT_NONE;
     }
     else
     {
-        // Restored conductivity
         parts[i].ctype = PT_SPRK;
     }
 
     // Glow effect based on temperature
-    if (temp > 2500.0f)
+    if (temp > 3000.0f)
     {
-        // Apply a glow effect
-        parts[i].life = 4; // Using life to indicate glowing state
+        parts[i].life = 4;
     }
 
     // Melting behavior
