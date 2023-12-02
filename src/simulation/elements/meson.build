@@ -192,6 +192,7 @@ simulation_elem_names = [
 	'ROCK',
 	'LITH',
 	'GRPH',
+	'GRPT',
 ]
 
 simulation_elem_src = []
